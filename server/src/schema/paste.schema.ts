@@ -6,8 +6,8 @@ export const createPasteSchema = z.object({
         content: z.string(),
         settings: z.object({
             language: z.string().optional(),
-            isPublic: z.boolean().optional(),
-            validTill: z.date().optional(),
+            editable: z.boolean().optional(),
+            expireAt: z.number().optional(),
         }).optional()
     })
 })

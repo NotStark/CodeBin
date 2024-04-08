@@ -11,7 +11,7 @@ const pasteCode = async (req: Request, res: Response) => {
 
 const getCode = async (req: Request, res: Response) => {
     const { key } = req.params as getPasteSchemaType;
-    console.log(req.params);
+    
     const paste = await PasteModel.findOne({ key } , { _id: 0, __v: 0 });
     if (paste) {
         res.status(200).json(paste);
