@@ -1,6 +1,6 @@
 
 ## A Project to share codes (OnGoing)
-Learning backend and building this project could take some time
+Learning backend while building this project could take some time
 
 ### Backend Tech Stack 
 - expressJs
