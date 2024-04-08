@@ -5,7 +5,7 @@ import { getPasteSchema, createPasteSchema } from "../schema/paste.schema";
 
 const router = Router();
 
-router.route('/get:key').get(validateResource(getPasteSchema), getCode);
+router.route('/get/:key').get(validateResource(getPasteSchema), getCode);
 router.route('/paste').post(validateResource(createPasteSchema), pasteCode);
 
 export default router;
