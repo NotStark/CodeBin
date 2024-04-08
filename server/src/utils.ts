@@ -18,7 +18,7 @@ function getIp() {
 ? Notes
 ! Deletes Documents where expireAt is not set or set to 0 and createdAt - currentTime > expireAt
 ? $expr allows us to perform aggregation expressions in a regular query
-? $subtract - Subtracts two numbers to return the difference, or two dates to return the difference in milliseconds (https://www.mongodb.com/docs/manual/reference/operator/aggregation/subtract/#:~:text=The%20second%20argument%20is%20subtracted,on%20expressions%2C%20see%20Expression%20Operators.)
+? $subtract - Subtracts two numbers to return the difference, or two dates to return the difference in milliseconds (https://shorturl.at/lsAMW)
 ? $gt: checks which value is greater between two fields
 */
 function runCronJob() {

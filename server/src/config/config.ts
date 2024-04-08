@@ -1,5 +1,5 @@
 
-// https://creatures.dev/blog/env-type-safety-and-validation/#:~:text=Validating%20environment%20variables,-Looking%20at%20the&text=To%20see%20all%20of%20the,if%20its%20value%20is%20invalid.
+// https://shorturl.at/ovNRV
 
 import { z } from 'zod'; 
 
