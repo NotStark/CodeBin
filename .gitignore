@@ -1,0 +1,19 @@
+# Ignore node_modules directory
+node_modules/
+
+# Ignore compiled TypeScript files
+/dist/
+
+# Ignore .env files (environment variables)
+.env
+
+# Ignore any OS or editor-specific files
+.DS_Store
+.vscode/
+.idea/
+
+# Ignore npm debug logs
+npm-debug.log*
+
+# ignore log files
+*.log
