@@ -16,7 +16,7 @@ function getIp() {
 
 /*
 ? Notes
-! Deletes Documents where expireAt is not set or set to 0 and createdAt - currentTime > expireAt
+! Deletes Documents where createdAt - currentTime > expireAt and expireAt != 0
 ? $expr allows us to perform aggregation expressions in a regular query
 ? $subtract - Subtracts two numbers to return the difference, or two dates to return the difference in milliseconds (https://shorturl.at/lsAMW)
 ? $gt: checks which value is greater between two fields

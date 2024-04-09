@@ -2,14 +2,14 @@ import { z } from 'zod';
 
 export const createPasteSchema = z.object({
     body: z.object({
-        key: z.string().optional(),
+        key: z.string(),
         content: z.string(),
         settings: z.object({
-            language: z.string().optional(),
-            editable: z.boolean().optional(),
-            expireAt: z.number().optional(),
-        }).optional()
-    })
+            language: z.string(),
+            editable: z.boolean(),
+            expireAt: z.number(),
+        })
+    }).deepPartial() // deepPartial will make all properties optional and not required -> currently depricated with no alternative
 })
 
 export const getPasteSchema = z.object({

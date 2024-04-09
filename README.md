@@ -15,3 +15,10 @@ Learning backend while building this project could take some time
 - React-CodeMirror
 - React Router
 
+
+### features to add
+- edit code
+- add a options field where user's can choose for how much time the url will be valid
+- allow users to customise urls
+- auto code formatter
+- allow users to change code language

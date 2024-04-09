@@ -26,8 +26,9 @@ app.use('/api/v1', router);
 connectDb().then(() => {
     const localIpAddress = getIp();
     app.listen(config.PORT, () => {
+        
         runCronJob(); // run cron job
-        console.log(`Server running on port http://localhost:${config.PORT} ${localIpAddress && `or http://${localIpAddress}:${config.PORT}`}`);
+        console.log(`Server running on port http://localhost:${config.PORT} ${localIpAddress && `or http://${localIpAddress}:${config.PORT}`} in ${app.settings.env} mode`);
     })
 }).catch((err : Error) => {
     console.error('Error connecting to MongoDB:', err);
