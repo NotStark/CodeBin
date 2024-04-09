@@ -17,3 +17,5 @@ npm-debug.log*
 
 # ignore log files
 *.log
+
+package-lock.json

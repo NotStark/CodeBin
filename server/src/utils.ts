@@ -1,7 +1,7 @@
 import os from 'node:os'
 import cron from 'node-cron';
 import PasteModel from './models/paste.model';
-
+import config from './config/config';
 
 /**
  * Retrieves the IPv4 address of the current machine's network interface.
@@ -27,7 +27,7 @@ function runCronJob() {
         const currentTime = new Date();
         try {
             const result = await PasteModel.deleteMany({
-                'settings.expireAt': { $ne: 0 }, 
+                'settings.expireAt': { $ne: 0 },
                 $expr: {
                     $gt: [{ $subtract: [currentTime, '$createdAt'] }, '$settings.expireAt']
                 }
@@ -38,5 +38,9 @@ function runCronJob() {
         }
     });
 }
+
+
+
+
 
 export { getIp, runCronJob }
