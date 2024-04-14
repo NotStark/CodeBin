@@ -2,16 +2,16 @@ import logo from "@/assets/Logo.svg";
 import Button from "@/components/Button";
 import { MdMenuOpen } from "react-icons/md";
 import { bundledLanguages, getHighlighter } from "shiki/bundle/web";
-import { useState, useEffect, useRef , MouseEvent } from "react";
+import { useState, useEffect, useRef, MouseEvent } from "react";
 import toast from "react-hot-toast";
 import axios from "axios";
 
 const BASE_URL = import.meta.env.VITE_SERVER_URL + "/api/v1";
 
-const expirationTime = {
-  "10 minutes": 10 * 60 * 1000,
-  "1 hour": 60 * 60 * 1000,
-  "1 day": 24 * 60 * 60 * 1000,
+const expirationTime: { [key: string]: number } = {
+  "10_minutes": 10 * 60 * 1000,
+  "1_hour": 60 * 60 * 1000,
+  "1_day": 24 * 60 * 60 * 1000,
   never: 0,
 };
 
@@ -25,45 +25,44 @@ type Paste = {
   };
 };
 
-
 const toastOptions = {
   style: {
-    background: 'black',
-    color: 'white',
+    background: "black",
+    color: "white",
   },
 };
 
 export default function App() {
-  const [codeHtml, setCodeHtml] = useState('');
-  const [settingsPanel, setSettingsPanel] = useState('-right-full');
+  const [codeHtml, setCodeHtml] = useState("");
+  const [settingsPanel, setSettingsPanel] = useState("-right-full");
   const languageRef = useRef<HTMLSelectElement>(null);
   const expirationRef = useRef<HTMLSelectElement>(null);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
-  const isPasteRoute = window.location.pathname !== '/';
+  const isPasteRoute = window.location.pathname !== "/";
 
   useEffect(() => {
     if (!isPasteRoute) return;
 
     const highlightCode = async () => {
       try {
-       
         console.log(`${BASE_URL}/get/${window.location.pathname.slice(1)}`);
-        
-        const res = await axios.get(`${BASE_URL}/get/${window.location.pathname.slice(1)}`);
-        
-        
+
+        const res = await axios.get(
+          `${BASE_URL}/get/${window.location.pathname.slice(1)}`
+        );
+
         const data: Paste = res.data;
         const highlighter = await getHighlighter({
-          themes: ['aurora-x'],
+          themes: ["aurora-x"],
           langs: [...Object.keys(bundledLanguages)],
         });
         const html = highlighter.codeToHtml(data.content, {
           lang: data.settings.language,
-          theme: 'aurora-x',
+          theme: "aurora-x",
         });
         setCodeHtml(html);
       } catch (error) {
-        toast.error('Failed to load the paste', toastOptions);
+        toast.error("Failed to load the paste", toastOptions);
       }
     };
     highlightCode();
@@ -72,53 +71,58 @@ export default function App() {
   const handleClick = async (e: MouseEvent<HTMLButtonElement>) => {
     if (!isPasteRoute) {
       if (!textAreaRef.current?.value.trim()) {
-        toast.error('Please enter some code', toastOptions);
+        toast.error("Please enter some code", toastOptions);
         return;
       }
- 
+
       e.currentTarget.disabled = true;
-      
-      const toastId = toast.loading('Generating...', toastOptions);
-      
+
+      const toastId = toast.loading("Generating...", toastOptions);
 
       try {
         const res = await axios.post(`${BASE_URL}/paste`, {
           content: textAreaRef.current?.value,
+          settings: {
+            language: languageRef.current?.value,
+            expireAt: expirationTime[expirationRef.current?.value || "never"],
+          },
         });
 
         if (res.status === 201) {
           const { key } = res.data as Paste;
-          window.location.href = `/${key}`;
           toast.dismiss(toastId);
+          window.location.href = `/${key}`;
         } else {
-          toast.error('Something went wrong', {
+          toast.error("Something went wrong", {
             id: toastId,
-            ...toastOptions
+            ...toastOptions,
           });
         }
       } catch (error) {
-        toast.error((error as Error).message || 'An unknown error occurred', {
+        toast.error((error as Error).message || "An unknown error occurred", {
           id: toastId,
           ...toastOptions,
         });
       }
 
       e.currentTarget.disabled = false;
-
     } else {
-      window.location.href = '/';
+      window.location.href = "/";
     }
   };
-
 
   return (
     <div className="bg-[#1B1B1C] w-full min-h-screen relative overflow-hidden">
       <nav className="bg-[#07090F] flex items-center justify-between px-3 sm:px-16 h-[12vh] border-b-2 border-b-white">
         <img src={logo} className="w-32 sm:w-40" alt="Logo" />
-        <div className="flex items-center gap-3" >
-          <Button onClick={handleClick} >{isPasteRoute ? 'Create' : 'Save'}</Button>
+        <div className="flex items-center gap-3">
+          <Button onClick={handleClick}>
+            {isPasteRoute ? "Create" : "Save"}
+          </Button>
           <span
-            className={`text-3xl cursor-pointer relative z-20 ${isPasteRoute ? 'hidden' : 'block'}`}
+            className={`text-3xl cursor-pointer relative z-20 ${
+              isPasteRoute ? "hidden" : "block"
+            }`}
             onClick={() =>
               setSettingsPanel((prev) =>
                 prev === "-right-full" ? "right-0" : "-right-full"
@@ -171,13 +175,16 @@ export default function App() {
           >
             {Object.keys(expirationTime).map((time) => (
               <option key={time} value={time}>
-                {time.toUpperCase()}
+                {time.toUpperCase().replace(/_/g, " ")}
               </option>
             ))}
           </select>
 
           <div className="w-3/4 ">
-            <Button className="w-full flex items-center justify-center" onClick={handleClick}>
+            <Button
+              className="w-full flex items-center justify-center"
+              onClick={handleClick}
+            >
               <span>Save</span>
             </Button>
           </div>
