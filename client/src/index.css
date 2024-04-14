@@ -2,6 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+.shiki.aurora-x {
+  counter-reset: count;
+}
+
+.shiki.aurora-x span.line::before {
+  counter-increment: count;
+  content: counter(count);
+  margin-right: 1rem;
+}
+
 ::-webkit-scrollbar {
-    display: none;
-  }
+   display: none;
+}

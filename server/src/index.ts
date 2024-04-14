@@ -6,31 +6,49 @@ import router from './routes/paste.route';
 import { getIp, runCronJob } from './utils';
 import morgan from 'morgan';
 
+
+// EXPRESS INSTANCE
 const app = express();
 
-// MIDDLEWARES
+
+// ----------------MIDDLEWARES-----------------
+// CORS MIDDLEWARE
 app.use(cors({
-    origin: config.CLIENT_URL,
-    methods: 'GET,POST',
-    credentials: true
+    origin: '*',
+    methods: ['GET', 'POST'],
+    credentials: true,
 }));
 
-app.use(morgan('dev')) // log every request to the console
 
+// LOG EVERY REQUEST TO THE CONSOLE
+app.use(morgan('dev'))
+
+// MIDDLEWARE TO PARSE REQUEST BODY
 app.use(express.json({ limit: '120kb' }));
+
+
+
+app.get("/", (_, res) => {
+    res.json({ message: "Server is running!" });
+});
 
 app.use('/api/v1', router);
 
+app.all('*', (_, res) => {
+    res.status(404).json({ message: 'Not Found' });
+})
 
-// STARTING SERVER AND MONGOOSE CLIENT
+// ----------------MIDDLEWARES-----------------
+
+
+// STARTING SERVER AND CONNECTING TO DB
 connectDb().then(() => {
     const localIpAddress = getIp();
     app.listen(config.PORT, () => {
-        
         runCronJob(); // run cron job
         console.log(`Server running on port http://localhost:${config.PORT} ${localIpAddress && `or http://${localIpAddress}:${config.PORT}`} in ${app.settings.env} mode`);
     })
-}).catch((err : Error) => {
+}).catch((err: Error) => {
     console.error('Error connecting to MongoDB:', err);
 })
 

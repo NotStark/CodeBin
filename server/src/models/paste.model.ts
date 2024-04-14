@@ -5,12 +5,12 @@ const settingSchema = new Schema({
     language: {
         type: String,
         required: false,
-        default: 'text',
+        default: 'javascript',
     },
     editable: {
         type: Boolean,
         required: false,
-        default: true,
+        default: false,
     },
     expireAt: {
         type: Number,
