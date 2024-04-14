@@ -86,6 +86,7 @@ export default function App() {
         if (res.status === 201) {
           const { key } = res.data as Paste;
           window.location.href = `/${key}`;
+          toast.dismiss(toastId);
         } else {
           toast.error('Something went wrong', {
             id: toastId,
@@ -170,7 +171,7 @@ export default function App() {
           </select>
 
           <div className="w-3/4 ">
-            <Button className="w-full flex items-center justify-center">
+            <Button className="w-full flex items-center justify-center" onClick={handleClick}>
               <span>Save</span>
             </Button>
           </div>
