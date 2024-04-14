@@ -1,24 +1,25 @@
+# CodeBin
+![CodeBin](https://graph.org/file/2d0f377252b959b593d82.jpg)
+Welcome to the CodeBin Project, a web-based application designed to enable developers to share code snippets easily and efficiently.
 
-## A Project to share codes (OnGoing)
-Learning backend while building this project could take some time
+## Features
 
-### Backend Tech Stack 
-- expressJs
-- mongoose
-- typescript
-- zod
+- **Create and share code snippets**: Users can post their code snippets, which can be accessed via unique URLs.
+- **Syntax highlighting**: Integrated shiki for syntax highlighting supports multiple languages.
+- **Expiration options**: Users can set expiration times for their snippets, after which the snippets become inaccessible.
+- **Responsive design**: The application is fully responsive and can be used across different devices and screen sizes.
 
-### Frontend Tech Stack
-- Vite
-- React
-- TypeScript
-- React-CodeMirror
-- React Router
+## Tech Stack
 
+### Backend
 
-### features to add
-- edit code
-- add a options field where user's can choose for how much time the url will be valid
-- allow users to customise urls
-- auto code formatter
-- allow users to change code language
+- **Express.js**
+- **Mongoose**
+- **TypeScript**
+- **Zod**
+
+### Frontend
+
+- **Vite**
+- **React**
+- **TypeScript**
