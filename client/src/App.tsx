@@ -2,7 +2,7 @@ import logo from "@/assets/Logo.svg";
 import Button from "@/components/Button";
 import { MdMenuOpen } from "react-icons/md";
 import { bundledLanguages, getHighlighter } from "shiki/bundle/web";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef , MouseEvent } from "react";
 import toast from "react-hot-toast";
 import axios from "axios";
 
@@ -69,14 +69,17 @@ export default function App() {
     highlightCode();
   }, [isPasteRoute]);
 
-  const handleClick = async () => {
+  const handleClick = async (e: MouseEvent<HTMLButtonElement>) => {
     if (!isPasteRoute) {
       if (!textAreaRef.current?.value.trim()) {
         toast.error('Please enter some code', toastOptions);
         return;
       }
-
+ 
+      e.currentTarget.disabled = true;
+      
       const toastId = toast.loading('Generating...', toastOptions);
+      
 
       try {
         const res = await axios.post(`${BASE_URL}/paste`, {
@@ -99,6 +102,9 @@ export default function App() {
           ...toastOptions,
         });
       }
+
+      e.currentTarget.disabled = false;
+
     } else {
       window.location.href = '/';
     }
